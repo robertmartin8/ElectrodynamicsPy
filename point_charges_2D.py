@@ -124,7 +124,6 @@ Charge.reset()
 A = Charge(1, [0, 0])
 B = Charge(4, [1, 0])
 
-xs = [-2, 2.5]
-ys = xs
+xs = ys =[-1, 2.5]
 Charge.plot_field(xs, ys, show_charge=False, field=True, potential=True)
 """
