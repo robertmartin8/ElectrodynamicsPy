@@ -1,18 +1,15 @@
 import numpy as np
-import matplotlib.colors as colors
 import matplotlib.pyplot as plt
-plt.style.use('seaborn-deep')
 
 
 class Charge:
-    # Registry will store the instances of Charge, i.e it will keep track of how many
-    # charges we have created
+    # Registry will store the instances of Charge
     registry = []
 
     def __init__(self, q, pos):
         """
         Initialise the charge
-        :param q: value of q 
+        :param q: value of charge
         :param pos: position of source charge
         """
         self.q = q
@@ -26,8 +23,13 @@ class Charge:
         :param y: y coordinate in field
         :return: Ex and Ey, the horizontal and vertical components of the field at (x,y).
         """
-        Ex = self.q * (x - self.pos[0]) / ((x - self.pos[0])**2 + (y - self.pos[1])**2) ** 1.5
-        Ey = self.q * (y - self.pos[1]) / ((x - self.pos[0])**2 + (y - self.pos[1])**2) ** 1.5
+        r = np.sqrt((x - self.pos[0])**2 + (y - self.pos[1])**2)
+
+        # Set the minimum value of r to avoid dividing by zero
+        r[r < 0.005] = 0.005
+
+        Ex = self.q * (x - self.pos[0]) / r**3
+        Ey = self.q * (y - self.pos[1]) / r**3
 
         return Ex, Ey
 
@@ -38,7 +40,12 @@ class Charge:
         :param y: y coordinate in field
         :return: the value of the potential
         """
-        V = self.q / np.sqrt((x - self.pos[0])**2 + (y - self.pos[1])**2)
+        r = np.sqrt((x - self.pos[0])**2 + (y - self.pos[1])**2)
+
+        # Set the minimum value of r to avoid dividing by zero
+        r[r < 0.005] = 0.005
+
+        V = self.q / r
         return V
 
     @staticmethod
@@ -105,12 +112,13 @@ class Charge:
             plt.show()
         if potential:
             # I have to multiply by 100 to get the potentials visible.
-            V = 100*(Charge.V_total(x, y))
+            V = 100 * (Charge.V_total(x, y))
             V[V > 10000] = 10000
             plt.contour(x, y, V, 10)
 
 
 # Demonstration
+"""
 Charge.reset()
 A = Charge(1, [0, 0])
 B = Charge(4, [1, 0])
@@ -118,5 +126,4 @@ B = Charge(4, [1, 0])
 xs = [-2, 2.5]
 ys = xs
 Charge.plot_field(xs, ys, show_charge=False, field=True, potential=True)
-
-
+"""
