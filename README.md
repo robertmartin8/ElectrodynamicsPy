@@ -5,7 +5,6 @@ My goal is to write logical, clear code which can either help me calculate or vi
 
 ![](https://github.com/surelyourejoking/ElectrodynamicsPy/blob/master/images/point_charges.png)
 
-
 ## What I have implemented so far:
 
 1. Calculate the field resulting from any point charges in 2D, with a stream plot.
