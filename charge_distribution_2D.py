@@ -1,5 +1,4 @@
 from point_charges_2D import Charge
-import numpy as np
 
 
 def straight_line_charge(start, end, res=40, Q=10):
@@ -33,6 +32,8 @@ def line_charge(parametric_x, parametric_y, trange, res, Q):
 
 # Example
 """
+import numpy as np
+
 Charge.reset()
 xs = ys = [-2, 2]
 
@@ -52,4 +53,13 @@ def rectangle_charge(dim, corner, res, Q):
     sigma = Q / (dim[0] * dim[1] * res**2)
     for i in range(int(dim[0] * res)):
         for j in range(int(dim[1] * res)):
-            Charge(sigma, [i/res - corner[0], j/res - corner[1]])
+            Charge(sigma, [i/res + corner[0], j/res + corner[1]])
+
+# Example
+"""
+Charge.reset()
+xs = ys = [-2, 2]
+
+rectangle_charge([1, 1], [-0.5, -0.5], res=80, Q=100)
+Charge.plot_field(xs, ys)
+"""
