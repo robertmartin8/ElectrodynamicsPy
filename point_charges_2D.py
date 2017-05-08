@@ -85,13 +85,13 @@ class Charge:
     @staticmethod
     def plot_field(xs, ys, show_charge=True, field=True, potential=False):
         """
-        Creates very basic plots
+        Creates basic plots
         :param xs: 2d list/tuple of x plotting range
         :param ys: 2d list/tuple of y plotting range
         :param show_charge: Whether or not the point charges should be displayed
         :param field: If true, plots the field lines
         :param potential: If true, plots the equipotentials (this is far from perfect). 
-        :return: A stream plot and/or contour plot. 
+        :return: A stream plot of E and/or contour plot of V. 
         """
         plt.figure()
         if show_charge:
@@ -102,20 +102,21 @@ class Charge:
                 if C.q < 0:
                     plt.plot(C.pos[0], C.pos[1], 'ro', ms=6*np.sqrt(-C.q))
 
-        x, y = np.meshgrid(np.linspace(xs[0], xs[1], 1000),
-                           np.linspace(ys[0], ys[1], 1000))
+        x, y = np.meshgrid(np.linspace(xs[0], xs[1], 100),
+                           np.linspace(ys[0], ys[1], 100))
 
         if field:
             Ex, Ey = Charge.E_total(x, y)
             plt.streamplot(x, y, Ex, Ey, color='g')
             plt.draw()
-            plt.show()
+
         if potential:
             # I have to multiply by 100 to get the potentials visible.
             V = 100 * (Charge.V_total(x, y))
             V[V > 10000] = 10000
             plt.contour(x, y, V, 10)
 
+        plt.show()
 
 # Demonstration
 """
