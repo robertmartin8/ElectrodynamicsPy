@@ -1,9 +1,10 @@
 from point_charges_2D import Charge
+import numpy as np
 
 
 def straight_line_charge(start, end, res=40, Q=10):
     """
-    A line of charge
+    A straight line of charge
     :param start: the coordinates (as a tuple/list) for the starting point of the line
     :param end: the coordinates (as a tuple/list) for the end point of the line 
     :param res: number of point charges per unit length
@@ -14,8 +15,30 @@ def straight_line_charge(start, end, res=40, Q=10):
     intercept = start[1] - gradient * start[0]
 
     lambd = Q / length
-    for i in range((end[0] - start[0])*res):
+    for i in range(int((end[0] - start[0])*res)):
         Charge(lambd, [i/res + start[0], gradient * (i/res) + intercept])
+
+
+def line_charge(parametric_x, parametric_y, trange, res, Q):
+    """
+    Any line of charge, where the line is specified by parametric equations in t. 
+    :param parametric_x: x(t)
+    :param parametric_y: y(t)
+    :param trange: the range of t values
+    :param res: how many point charges should be plotted per unit t
+    :param Q: the total charge of the line
+    """
+    for t in range(int(trange * res)):
+        Charge(Q/res, [parametric_x(t/res), parametric_y(t/res)])
+
+# Example
+"""
+Charge.reset()
+xs = ys = [-2, 2]
+
+line_charge(parametric_x=lambda t: np.cos(t), parametric_y=lambda t: np.sin(t), trange=2*np.pi, res=100, Q=10 )
+Charge.plot_field(xs, ys)
+"""
 
 
 def rectangle_charge(dim, corner, res, Q):
