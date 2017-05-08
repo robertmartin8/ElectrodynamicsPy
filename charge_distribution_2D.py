@@ -1,7 +1,7 @@
 from point_charges_2D import Charge
 
 
-def line_charge(start, end, res, Q):
+def straight_line_charge(start, end, res=40, Q=10):
     """
     A line of charge
     :param start: the coordinates (as a tuple/list) for the starting point of the line
@@ -14,7 +14,7 @@ def line_charge(start, end, res, Q):
     intercept = start[1] - gradient * start[0]
 
     lambd = Q / length
-    for i in range((end[0]-start[0])*res):
+    for i in range((end[0] - start[0])*res):
         Charge(lambd, [i/res + start[0], gradient * (i/res) + intercept])
 
 
