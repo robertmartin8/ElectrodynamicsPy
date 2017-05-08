@@ -3,7 +3,7 @@
 
 My goal is to write logical, clear code which can either help me calculate or visualise the various physical quantities that arise from the study of electrodynamical systems.
 
-![](https://octodex.github.com/images/yaktocat.png)
+![](https://github.com/surelyourejoking/ElectrodynamicsPy/blob/master/images/point_charges.png)
 
 
 ## What I have implemented so far:
